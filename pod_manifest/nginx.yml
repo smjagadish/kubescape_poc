@@ -3,10 +3,23 @@ kind: Pod
 metadata:
   name: super-risky-pod
 spec:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
   containers:
   - name: nginx
     image: nginx
     securityContext:
-      privileged: true
-      runAsUser: 0
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      # privileged: true
+      # runAsUser: 0
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
 
