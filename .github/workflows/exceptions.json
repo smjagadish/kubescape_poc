@@ -1,0 +1,43 @@
+[
+    {
+        "name": "exclude-linux-hardening-policy-control",
+        "policyType": "postureExceptionPolicy",
+        "actions": [
+            "alertOnly"
+        ],
+        "resources": [
+            {
+                "designatorType": "Attributes",
+                "attributes": {
+                    "kind": ".*"
+                }
+            }
+        ],
+        "posturePolicies": [
+            {
+                "controlID": "C-0055"
+            }
+        ]
+    },
+    {
+        "name": "exclude-egress-and-ingress-blocked-policy-control",
+        "policyType": "postureExceptionPolicy",
+        "actions": [
+            "alertOnly"
+        ],
+        "resources": [
+            {
+                "designatorType": "Attributes",
+                "attributes": {
+                    "kind": ".*"
+                }
+            }
+        ],
+        "posturePolicies": [
+            {
+                "controlID": "C-0030"
+            }
+        ]
+    }
+]
+
