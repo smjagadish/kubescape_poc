@@ -14,5 +14,7 @@ jobs:
       with:
         frameworks: NSA,MITRE
         verbose: true
+        exceptions: exceptions.json
+
     
 
