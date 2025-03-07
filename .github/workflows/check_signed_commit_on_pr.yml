@@ -16,7 +16,7 @@ jobs:
         run: |
           # Fetch all commits in the PR branch that are not in the base branch
           git fetch origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
-          git rev-list --no-merges --right-only --remotes=origin/${{ github.base_ref}}..HEAD > commits.txt
+          git rev-list --no-merges --right-only origin/${{ github.base_ref}}..HEAD > commits.txt
 
           # Check each commit for GPG signature
           unsigned_count=0
