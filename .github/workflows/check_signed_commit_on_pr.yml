@@ -1,0 +1,35 @@
+name: Ensure Signed Commits
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify-signed-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Verify signed commits
+        run: |
+          # Fetch all commits in the PR branch that are not in the base branch
+          git fetch origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+          git rev-list --no-merges --right-only --remotes=origin/${{ github.base_ref}..HEAD > commits.txt
+
+          # Check each commit for GPG signature
+          unsigned_count=0
+          while IFS= read -r commit; do
+            echo "Checking commit $commit"
+            if ! git verify-commit $commit > /dev/null 2>&1; then
+              echo "Commit $commit is not signed"
+              unsigned_count=$((unsigned_count + 1))
+            fi
+          done < commits.txt
+
+          if [ $unsigned_count -gt 0 ]; then
+            echo "Commit verification failed. $unsigned_count commit(s) were not signed."
+            exit 1
+          fi
+
