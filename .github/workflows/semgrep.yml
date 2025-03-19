@@ -22,7 +22,7 @@ jobs:
         # Use a verified ruleset identifier from the Semgrep Registry
         run: semgrep --config p/security-audit --config p/cwe-top-25 --error
       - name: Upload Semgrep findings
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: semgrep-findings
           path: semgrep.log
